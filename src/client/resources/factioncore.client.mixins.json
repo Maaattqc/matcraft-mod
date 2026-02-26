@@ -1,0 +1,24 @@
+{
+	"required": true,
+	"package": "qc.mat.factioncore.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"EntitySprintMixin",
+		"GuiMixin",
+		"HumanoidModelMixin",
+		"HumanoidRenderStateMixin",
+		"ItemInHandLayerMixin",
+		"ItemInHandRendererMixin",
+		"KeyboardInputMixin",
+		"LivingEntityRendererMixin",
+		"LocalPlayerSprintMixin",
+		"LivingEntitySwingMixin",
+		"MinecraftMixin",
+		"MultiPlayerGameModeMixin",
+		"ItemStackTooltipMixin",
+		"TitleScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
