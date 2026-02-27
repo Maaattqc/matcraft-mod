@@ -1,0 +1,25 @@
+{
+	"required": true,
+	"package": "qc.mat.matcraftmod.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"EntitySprintMixin",
+		"GuiMixin",
+		"HumanoidModelMixin",
+		"HumanoidRenderStateMixin",
+		"ItemInHandLayerMixin",
+		"ItemInHandRendererMixin",
+		"KeyboardInputMixin",
+		"LivingEntityRendererMixin",
+		"LocalPlayerSprintMixin",
+		"LivingEntitySwingMixin",
+		"MinecraftMixin",
+		"MultiPlayerGameModeMixin",
+		"ItemStackTooltipMixin",
+		"TitleScreenMixin",
+		"WindowBrandingMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

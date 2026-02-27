@@ -21,7 +21,7 @@ jobs:
         with:
           name: mod-jar
           path: |
-            build/libs/factioncore-*.jar
+            build/libs/matcraftmod-*.jar
             !build/libs/*-sources.jar
 
   deploy:
@@ -42,7 +42,8 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             rm -f /home/debian/website/azuriom/public/launcher/mods/factioncore-*.jar
-            echo "Old factioncore JARs removed"
+            rm -f /home/debian/website/azuriom/public/launcher/mods/matcraftmod-*.jar
+            echo "Old JARs removed"
 
       - name: Upload new JAR to server
         uses: appleboy/scp-action@v0.1.7

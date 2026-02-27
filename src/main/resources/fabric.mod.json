@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "factioncore",
+	"id": "matcraftmod",
 	"version": "${version}",
 	"name": "FactionCore",
 	"description": "This is an example description! Tell everyone what your mod is about!",
@@ -12,20 +12,20 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/factioncore/icon.png",
+	"icon": "assets/matcraftmod/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"qc.mat.factioncore.FactionCore"
+			"qc.mat.matcraftmod.FactionCore"
 		],
 		"client": [
-			"qc.mat.factioncore.FactionCoreClient"
+			"qc.mat.matcraftmod.FactionCoreClient"
 		]
 	},
 	"mixins": [
-		"factioncore.mixins.json",
+		"matcraftmod.mixins.json",
 		{
-			"config": "factioncore.client.mixins.json",
+			"config": "matcraftmod.client.mixins.json",
 			"environment": "client"
 		}
 	],
