@@ -1,7 +1,7 @@
 package qc.mat.factioncore.mixin.client;
 
 import com.mojang.blaze3d.platform.Window;
-import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
@@ -30,11 +30,7 @@ public abstract class WindowBrandingMixin {
 
 	@Inject(method = "updateTitle", at = @At("TAIL"))
 	private void factioncore$setCustomTitle(CallbackInfo ci) {
-		String version = FabricLoader.getInstance()
-				.getModContainer("factioncore")
-				.map(c -> c.getMetadata().getVersion().getFriendlyString())
-				.orElse("1.0.0");
-		getWindow().setTitle("MatCraft " + version);
+		getWindow().setTitle("MatCraft " + SharedConstants.getCurrentVersion().name());
 
 		if (!factioncore$iconSet) {
 			factioncore$iconSet = true;
