@@ -16,7 +16,8 @@
 		"MinecraftMixin",
 		"MultiPlayerGameModeMixin",
 		"ItemStackTooltipMixin",
-		"TitleScreenMixin"
+		"TitleScreenMixin",
+		"WindowBrandingMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
