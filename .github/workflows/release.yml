@@ -1,0 +1,79 @@
+name: Build & Deploy Mod
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+      - run: chmod +x ./gradlew
+      - run: ./gradlew build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mod-jar
+          path: |
+            build/libs/factioncore-*.jar
+            !build/libs/*-sources.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: mod-jar
+          path: mod
+
+      - name: Remove old version from server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            rm -f /home/debian/website/azuriom/public/launcher/mods/factioncore-*.jar
+            echo "Old factioncore JARs removed"
+
+      - name: Upload new JAR to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "mod/*.jar"
+          target: "/home/debian/website/azuriom/public/launcher/mods/"
+          strip_components: 1
+
+      - name: Regenerate manifest.json
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /home/debian/website/azuriom/public/launcher/mods
+            python3 -c "
+            import os, hashlib, json
+            jars = sorted(f for f in os.listdir('.') if f.endswith('.jar'))
+            mods = []
+            for jar in jars:
+                h = hashlib.sha256(open(jar, 'rb').read()).hexdigest()
+                mods.append({'name': jar, 'sha256': h})
+            with open('manifest.json', 'w') as f:
+                json.dump({'mods': mods}, f, indent=2)
+            print(f'Generated manifest for {len(mods)} mods:')
+            for m in mods:
+                print(f'  {m[\"name\"]}')
+            "
