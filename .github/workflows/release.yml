@@ -41,9 +41,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            rm -f /home/debian/website/azuriom/public/launcher/mods/factioncore-*.jar
             rm -f /home/debian/website/azuriom/public/launcher/mods/matcraftmod-*.jar
-            echo "Old JARs removed"
+            echo "Old matcraftmod JARs removed"
 
       - name: Upload new JAR to server
         uses: appleboy/scp-action@v0.1.7
